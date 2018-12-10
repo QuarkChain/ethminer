@@ -269,6 +269,7 @@ void PoolManager::workLoop()
         }
 
         // Hashrate reporting
+        /*
         m_hashrateReportingTimePassed++;
 
         if (m_hashrateReportingTimePassed > m_hashrateReportingTime)
@@ -285,7 +286,7 @@ void PoolManager::workLoop()
             p_client->submitHashrate("0x" + ss.str());
             m_hashrateReportingTimePassed = 0;
         }
-
+        */
         this_thread::sleep_for(chrono::seconds(1));
     }
 }
