@@ -150,7 +150,7 @@ void EthGetworkClient::workLoop()
                     m_prevWorkPackage.header = newWorkPackage.header;
                     m_prevWorkPackage.epoch = newWorkPackage.epoch;
                     long long diff = std::stoll(v[2].asString(), nullptr, 16);
-                    diff = diff / 100;
+                   
                     m_prevWorkPackage.boundary = (h256)(u256)((bigint(1) << 256) / diff);
                     if (m_onWorkReceived)
                     {
