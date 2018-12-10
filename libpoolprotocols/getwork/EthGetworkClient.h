@@ -16,7 +16,7 @@ using namespace eth;
 class EthGetworkClient : public PoolClient, Worker
 {
 public:
-    EthGetworkClient(unsigned farmRecheckPeriod, bool submitHashrate);
+    EthGetworkClient(unsigned farmRecheckPeriod, unsigned id, bool submitHashrate);
     ~EthGetworkClient();
 
     void connect() override;
@@ -27,12 +27,13 @@ public:
 
     string ActiveEndPoint() override { return ""; };
 
-    void submitHashrate(string const& rate) override;
+    //void submitHashrate(string const& rate) override;
     void submitSolution(const Solution& solution) override;
 
 private:
     void workLoop() override;
-    unsigned m_farmRecheckPeriod = 500;
+    unsigned m_farmRecheckPeriod = 4000;
+    unsigned shard_id = 0;
 
     string m_currentHashrateToSubmit = "";
 
