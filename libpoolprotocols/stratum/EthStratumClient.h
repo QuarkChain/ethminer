@@ -49,7 +49,7 @@ public:
     bool isAuthorized() { return m_authorized.load(std::memory_order_relaxed); }
     string ActiveEndPoint() override { return " [" + toString(m_endpoint) + "]"; };
 
-    void submitHashrate(string const& rate) override;
+    //void submitHashrate(string const& rate) override;
     void submitSolution(const Solution& solution) override;
 
     h256 currentHeaderHash() { return m_current.header; }

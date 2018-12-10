@@ -944,6 +944,8 @@ void EthStratumClient::processResponse(Json::Value& responseObject)
                     jReq["id"] = unsigned(5);
                     jReq["method"] = "eth_getWork";
                     jReq["params"] = Json::Value(Json::arrayValue);
+                
+                    jReq["params"].append("0x1");
                 }
 
                 break;
@@ -1317,7 +1319,7 @@ void EthStratumClient::processResponse(Json::Value& responseObject)
         }
     }
 }
-
+/*
 void EthStratumClient::submitHashrate(string const& rate)
 {
     m_rate = rate;
@@ -1345,7 +1347,7 @@ void EthStratumClient::submitHashrate(string const& rate)
 
     sendSocketData(jReq);
 }
-
+*/
 void EthStratumClient::submitSolution(const Solution& solution)
 {
     if (!m_subscribed.load(std::memory_order_relaxed) ||
@@ -1364,7 +1366,7 @@ void EthStratumClient::submitSolution(const Solution& solution)
     m_solution_submitted_max_id = max(m_solution_submitted_max_id, id);
     jReq["method"] = "mining.submit";
     jReq["params"] = Json::Value(Json::arrayValue);
-
+   
     switch (m_conn->StratumMode())
     {
     case EthStratumClient::STRATUM:
@@ -1372,8 +1374,9 @@ void EthStratumClient::submitSolution(const Solution& solution)
         jReq["jsonrpc"] = "2.0";
         jReq["params"].append(m_conn->User());
         jReq["params"].append(solution.work.job.hex());
-        jReq["params"].append("0x" + nonceHex);
+        jReq["params"].append("0x1");
         jReq["params"].append("0x" + solution.work.header.hex());
+        jReq["params"].append("0x" + nonceHex);
         jReq["params"].append("0x" + solution.mixHash.hex());
         if (m_worker.length())
             jReq["worker"] = m_worker;
@@ -1381,10 +1384,10 @@ void EthStratumClient::submitSolution(const Solution& solution)
         break;
 
     case EthStratumClient::ETHPROXY:
-
-        jReq["method"] = "eth_submitWork";
-        jReq["params"].append("0x" + nonceHex);
+        jReq["method"] = "itWork";
+        jReq["params"].append("0x1");
         jReq["params"].append("0x" + solution.work.header.hex());
+        jReq["params"].append("0x" + nonceHex);
         jReq["params"].append("0x" + solution.mixHash.hex());
         if (m_worker.length())
             jReq["worker"] = m_worker;
