@@ -41,12 +41,13 @@ void SimulateClient::disconnect()
     }
 }
 
-void SimulateClient::submitHashrate(string const& rate)
+/*void SimulateClient::submitHashrate(string const& rate)
 {
     (void)rate;
     auto sec = duration_cast<seconds>(steady_clock::now() - m_time);
     cnote << "On difficulty" << m_difficulty << "for" << sec.count() << "seconds";
 }
+*/
 
 void SimulateClient::submitSolution(const Solution& solution)
 {
