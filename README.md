@@ -206,7 +206,7 @@ ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID
 ```
 
 - `--shard-id` defines one specify shard to mine. shard id 0 ~ 3 are Ethash.
-- `--cuda--devices` defines specify GPUs to mine. 
+- `--cuda-devices` defines specify GPUs to mine. 
 
 Noted that if you want to mine multiple shards, please open multiple terminals.
 
