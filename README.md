@@ -214,6 +214,13 @@ You check the GPU id by using the
 ```shell
 nvidia-smi
 ```
+## Testnet 2.4 GPU mining shardID
+|Chains |Hash Algorithm |ShardID|
+| ---      | ---       | --- |
+| Shard 0      | Ethash               | 1 |
+| Shard 1       | Ethash        | 10001 |
+| Shard 2       | Ethash              | 20001 |
+| Shard 3       | Ethash              | 30001 |
 
 ## AWS AMI
 
