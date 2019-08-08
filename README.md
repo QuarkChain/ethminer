@@ -202,7 +202,7 @@ cd ethminer/build/ethminer
     
 If you use the CUDA GPU, please use,
 ```shell
-ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID
+ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID --farm-recheck $TIME
 ```
 
 - `--shard-id` defines one specify shard to mine. shard id 0 ~ 3 are Ethash.
