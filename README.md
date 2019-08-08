@@ -205,7 +205,7 @@ If you use the CUDA GPU, please use,
 ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID --farm-recheck $TIME
 ```
 
-- `--shard-id` defines one specify shard to mine. shard id 0 ~ 3 are Ethash.
+- `--shard-id` defines one specify shard to mine. shard id 1, 10001, 20001, 30001, 40001, 50001 are Ethash.
 - `--cuda-devices` defines specify GPUs to mine. 
 - `--farm-recheck` defines check interval in milliseconds for changed work.
 
@@ -222,6 +222,9 @@ nvidia-smi
 | Shard 1       | Ethash        | 10001 |
 | Shard 2       | Ethash              | 20001 |
 | Shard 3       | Ethash              | 30001 |
+| Shard 4       | Ethash              | 40001 |
+| Shard 5       | Ethash              | 50001 |
+
 
 ## AWS AMI
 
