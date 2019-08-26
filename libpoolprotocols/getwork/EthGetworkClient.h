@@ -16,7 +16,7 @@ using namespace eth;
 class EthGetworkClient : public PoolClient, Worker
 {
 public:
-    EthGetworkClient(unsigned farmRecheckPeriod, unsigned id, bool submitHashrate);
+    EthGetworkClient(unsigned farmRecheckPeriod, unsigned id, string coinbase, bool submitHashrate);
     ~EthGetworkClient();
 
     void connect() override;
@@ -34,6 +34,7 @@ private:
     void workLoop() override;
     unsigned m_farmRecheckPeriod = 4000;
     unsigned shard_id = 0;
+    string coinbase_adr = "";
 
     string m_currentHashrateToSubmit = "";
 

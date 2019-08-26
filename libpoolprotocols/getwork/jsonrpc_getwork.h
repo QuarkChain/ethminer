@@ -16,11 +16,12 @@ public:
 	std::mutex getWork_submitWork_mutex;
     JsonrpcGetwork(jsonrpc::IClientConnector* conn) { this->client = new jsonrpc::Client(*conn); }
 
-    Json::Value eth_getWork(const std::string& shard)
+    Json::Value eth_getWork(const std::string& shard, const std::string& coinbase_adr)
     {
     	std::lock_guard<std::mutex> guard(getWork_submitWork_mutex);
         Json::Value p;
         p.append(shard);
+        p.append(coinbase_adr);
         Json::Value result = this->client->CallMethod("getWork", p);
         if (result.isArray())
             return result;

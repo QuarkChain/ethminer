@@ -2,12 +2,12 @@
 
 
 
-> QuarkChain miner with OpenCL, CUDA and getWork support
+> QuarkChain Ethash miner with OpenCL, CUDA, and getWork support
 
 **Ethminer** is an Ethash GPU mining worker.
 
-I forked the Ethminer and modified the code, which can support the QuarkChain Testnet 2.0 Ethash mining. 
-With this modified ethminer, you can mine the shards (0 ~ 3), which relies on an Ethash Proof of Work.
+I forked the Ethminer and modified the code, which can support the QuarkChain mainnet Ethash mining. 
+With this modified ethminer, you can mine the root chain and shard chains (0 ~ 5), which relies on an Ethash Proof of Work or Proof of Staked Work.
 Noted that this version only support the getWork (Farm) mode. 
 See [FAQ](#faq) for more details.
 
@@ -184,7 +184,7 @@ ethminer --help
 
 # Run a cluster
 
-I highly recommend you can use a multi-core CPU computer to [run a QuarkChain full cluster](https://github.com/QuarkChain/pyquarkchain/wiki/Run-a-Private-Cluster-on-the-QuarkChain-Testnet-2.0). 
+I highly recommend you can use a multi-core CPU computer to [run a QuarkChain full cluster](https://github.com/QuarkChain/pyquarkchain/wiki/Start-Clusters-on-the-QuarkChain). 
 
 ## Port Forwarding
 
@@ -200,14 +200,35 @@ After you build from source, run the follow command line to start GPU mining for
 cd ethminer/build/ethminer
 ```
     
-If you use the CUDA GPU, please use,
+If you download the binary code from release and use the CUDA GPU, please use the following command line,
 ```shell
-ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID --farm-recheck $TIME
+ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID --farm-recheck $TIME --coinbase $COINBASE_ADDRESS
 ```
 
+- `CLUSTER_IP` defines the IP for the Quarkchain cluster. If you want to try the one button quick mining, you can use  fullnode.quarkchain.io.
 - `--shard-id` defines one specify shard to mine. shard id 1, 10001, 20001, 30001, 40001, 50001 are Ethash.
 - `--cuda-devices` defines specify GPUs to mine. 
-- `--farm-recheck` defines check interval in milliseconds for changed work. For example 500.
+- `--farm-recheck` defines check interval in milliseconds for changed work. For example 4000. 
+- `--coinbase` defines your mining coinbase address. Please use 20 bytes address generated the same way as an Ethereum address.
+- `-U` is for the CUDA GPU and `-G` is for the AMD GPU.
+
+One example for chain 1, shard 0 is
+```shell
+ethminer -U http://fullnode.quarkchain.io:38391 --shard-id 10001 --farm-recheck 4000 --coinbase 0x1000000000000000000000000000000000000000
+```
+
+Disclaimer: The public full node (fullnode.quarkchain.io) is only for the novices. We cannot guarantee or promise any service availability and security. If you have several mining machines, we strongly recommend that you [run a cluster](https://github.com/QuarkChain/pyquarkchain/wiki/Start-Clusters-on-the-QuarkChain) by yourself to guarantee the security and mining efficiency.
+
+
+## mainnet GPU mining shardID
+|Chain |Shard |Hash Algo |Parameter for Ethminer shard ID|
+| ---      | ---     |---  | --- |
+| 0  | 0      | Ethash               | 1 |
+| 1  |  0      | Ethash        | 10001 |
+| 2  |  0       | Ethash              | 20001 |
+| 3  |  0       | Ethash              | 30001 |
+| 4  |  0       | Ethash              | 40001 |
+| 5  |  0       | Ethash              | 50001 |
 
 Noted that if you want to mine multiple shards, please open multiple terminals.
 
@@ -215,20 +236,6 @@ You check the GPU id by using the
 ```shell
 nvidia-smi
 ```
-## Testnet 2.4 GPU mining shardID
-|Chains |Hash Algorithm |ShardID|
-| ---      | ---       | --- |
-| Shard 0      | Ethash               | 1 |
-| Shard 1       | Ethash        | 10001 |
-| Shard 2       | Ethash              | 20001 |
-| Shard 3       | Ethash              | 30001 |
-| Shard 4       | Ethash              | 40001 |
-| Shard 5       | Ethash              | 50001 |
-
-
-## AWS AMI
-
-QuarkChain GPU Mining AMI ami-042a6b2a7c48dea80   (Region: Oregon)
 
 ## License
 

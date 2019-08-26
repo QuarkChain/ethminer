@@ -11,11 +11,12 @@ using namespace std;
 using namespace dev;
 using namespace eth;
 
-EthGetworkClient::EthGetworkClient(unsigned farmRecheckPeriod, unsigned id, bool submitHashrate)
+EthGetworkClient::EthGetworkClient(unsigned farmRecheckPeriod, unsigned id, string coinbase, bool submitHashrate)
   : PoolClient(), Worker("getwork"), m_submit_hashrate(submitHashrate)
 {
     m_farmRecheckPeriod = farmRecheckPeriod;
     shard_id = id;
+    coinbase_adr = coinbase;
     m_subscribed.store(true, std::memory_order_relaxed);
     m_authorized.store(true, std::memory_order_relaxed);
     m_submit_hashrate = false;
@@ -130,10 +131,11 @@ void EthGetworkClient::workLoop()
             try
             {
                 Json::Value v;
+                const string& adr = coinbase_adr;
                 if (shard_id == 999) {
-                    v = p_client->eth_getWork("null");
+                    v = p_client->eth_getWork("null", adr);
                 } else {
-                    v = p_client->eth_getWork("0x" + to_string(shard_id));
+                    v = p_client->eth_getWork("0x" + to_string(shard_id), adr);
                 }
 
                 
@@ -150,7 +152,9 @@ void EthGetworkClient::workLoop()
                     m_prevWorkPackage.header = newWorkPackage.header;
                     m_prevWorkPackage.epoch = newWorkPackage.epoch;
                     long long diff = std::stoll(v[2].asString(), nullptr, 16);
-                   
+                    if (shard_id == 999) {
+                    diff = diff / 1000;
+                    }
                     m_prevWorkPackage.boundary = (h256)(u256)((bigint(1) << 256) / diff);
                     if (m_onWorkReceived)
                     {

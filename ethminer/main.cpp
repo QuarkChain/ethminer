@@ -225,6 +225,10 @@ public:
             ->group(CommonGroup)
             ->check(CLI::Range(0, 99999));
 
+        app.add_option("--coinbase", coinbase,
+               "Set coinbase for miners", true)
+            ->group(CommonGroup);
+
         app.add_option("--farm-recheck", m_farmRecheckPeriod,
                "Set check interval in milliseconds for changed work", true)
             ->group(CommonGroup)
@@ -886,7 +890,7 @@ private:
         }
         else if (m_mode == OperationMode::Farm)
         {
-            client = new EthGetworkClient(m_farmRecheckPeriod, shard_id, m_report_hashrate);
+            client = new EthGetworkClient(m_farmRecheckPeriod, shard_id, coinbase, m_report_hashrate);
         }
         else if (m_mode == OperationMode::Simulation)
         {
@@ -1055,6 +1059,7 @@ private:
     unsigned m_maxFarmRetries = 3;
     unsigned m_farmRecheckPeriod = 500;
     unsigned shard_id = 0;
+    string coinbase = "";
     unsigned m_displayInterval = 5;
 
     // Number of seconds to wait before triggering a no work timeout from pool
