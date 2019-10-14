@@ -206,7 +206,7 @@ ethminer -U http://$CLUSTER_IP:38391 --shard-id $SHARD_ID --cuda-devices $GPU_ID
 ```
 
 - `CLUSTER_IP` defines the IP for the Quarkchain cluster. If you want to try the one button quick mining, you can use  fullnode.quarkchain.io.
-- `--shard-id` defines one specify shard to mine. shard id 1, 10001, 20001, 30001, 40001, 50001 are Ethash.
+- `--shard-id` defines one specify shard to mine. shard id 1, 10001, 20001, 30001, 40001, 50001 are Ethash. If you mine the root chain with PoSW, shard id is 9999.
 - `--cuda-devices` defines specify GPUs to mine. 
 - `--farm-recheck` defines check interval in milliseconds for changed work. For example 4000. 
 - `--coinbase` defines your mining coinbase address. Please use 20 bytes address generated the same way as an Ethereum address.
@@ -223,6 +223,7 @@ Disclaimer: The public full node (fullnode.quarkchain.io) is only for the novice
 ## mainnet GPU mining shardID
 |Chain |Shard |Hash Algo |Parameter for Ethminer shard ID|
 | ---      | ---     |---  | --- |
+| Root  | ---      | Ethash               | 9999 |
 | 0  | 0      | Ethash               | 1 |
 | 1  |  0      | Ethash        | 10001 |
 | 2  |  0       | Ethash              | 20001 |
