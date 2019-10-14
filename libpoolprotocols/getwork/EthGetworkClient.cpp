@@ -81,7 +81,7 @@ void EthGetworkClient::submitSolution(const Solution& solution)
           
             std::chrono::steady_clock::time_point submit_start = std::chrono::steady_clock::now();
             bool accepted;
-            if (shard_id == 999) {
+            if (shard_id == 9999) {
                 accepted = p_client->eth_submitWork("null", "0x" + toString(solution.work.header),
                  "0x" + toHex(solution.nonce), "0x" + toString(solution.mixHash));
             } else {
@@ -132,7 +132,7 @@ void EthGetworkClient::workLoop()
             {
                 Json::Value v;
                 const string& adr = coinbase_adr;
-                if (shard_id == 999) {
+                if (shard_id == 9999) {
                     v = p_client->eth_getWork("null", adr);
                 } else {
                     v = p_client->eth_getWork("0x" + to_string(shard_id), adr);
@@ -152,8 +152,8 @@ void EthGetworkClient::workLoop()
                     m_prevWorkPackage.header = newWorkPackage.header;
                     m_prevWorkPackage.epoch = newWorkPackage.epoch;
                     long long diff = std::stoll(v[2].asString(), nullptr, 16);
-                    if (shard_id == 999) {
-                    diff = diff / 1000;
+                    if (shard_id == 9999) {
+                    diff = diff / 10000;
                     }
                     m_prevWorkPackage.boundary = (h256)(u256)((bigint(1) << 256) / diff);
                     if (m_onWorkReceived)
